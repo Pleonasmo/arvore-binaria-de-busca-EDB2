@@ -3,15 +3,19 @@ package arvore;
 public class Arvore {
     private No raiz;
 
+    Arvore(int valor){
+       this.raiz = new No(valor);
+    }
+    
     int buscarElemento() {
         return 0;
     }
 
-    void inserirElemento() {
+    void inserirElemento(int elemento) {
 
     }
 
-    void removerElemento() {
+    void removerElemento(int elemento) {
 
     }
 

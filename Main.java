@@ -1,7 +1,8 @@
 import arvore.Arvore;
+import javax.swing.JOptionPane;
 
 class Main {
     public static void main(String[] args) {
-        Arvore arvore;
+       JOptionPane.showMessageDialog("Teste");
     }
 }
