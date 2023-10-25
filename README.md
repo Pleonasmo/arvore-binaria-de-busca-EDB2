@@ -20,3 +20,15 @@ contrário.
 da ABB em pré-ordem.
 8. void imprimeArvore (int s): se “s” igual a 1, o método imprime a árvore no formato 1, “s”
 igual a 2, imprime no formato 2.
+
+Algumas operações descritas poderia ser facilmente implementada utilizando um percurso em
+ordem simétrica e, talvez, armazenando resultados em um vetor. Entretanto, esse procedimento é
+ineficiente. Ao invés disso, vamos melhorar o desempenho dessas operações aumentando
+os nós da ABB, isto é, armazenando informações extras em cada nó da árvore que simplificarão as
+operações. Uma informação pode ser a quantidade de nós nas subárvores à direita e à
+esquerda. Outras informações necessárias, se for o caso, devem ser identificadas por
+vocês. Seu algoritmo deve receber dois arquivos como parâmetros. O primeiro, contém uma
+descrição da ABB que será utilizada e é denominado arquivo de entrada da ABB. O arquivo de
+entrada da ABB contém uma sequência de valores inteiros separados por um espaço, os valores a
+serem armazenados na árvore. O segundo arquivo, denominado arquivo de comandos, contém uma
+sequência de operações (uma operação por linha) a serem realizadas pelo seu algoritmo.
