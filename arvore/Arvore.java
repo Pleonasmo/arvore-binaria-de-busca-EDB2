@@ -1,17 +1,48 @@
 package arvore;
 
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 public class Arvore {
     private No raiz;
 
-    Arvore(int valor){
-       this.raiz = new No(valor);
+    public Arvore(int valor) {
+        this.raiz = new No(valor);
+        raiz.setNivel(1);
     }
-    
-    int buscarElemento() {
+
+    public int buscarElemento(No no, int elemento) {
+        if (no.getValor() == elemento) {
+            return 1;
+        } else if (no.getFilhoDireita() != null) {
+
+            buscarElemento(no.getFilhoDireita(), elemento);
+
+        } else if (no.getFilhoEsquerda() != null) {
+
+            buscarElemento(no.getFilhoEsquerda(), elemento);
+
+        }
         return 0;
     }
 
-    void inserirElemento(int elemento) {
+    public void inserirElemento(int elemento, No no) {
+
+        if (elemento < no.getValor()) {
+            if (raiz.getFilhoEsquerda() != null) {
+                inserirElemento(elemento, no.getFilhoEsquerda());
+            } else {
+                no.setFilhoEsquerda(new No(elemento));
+            }
+        }
+        if (elemento > no.getValor()) {
+            if (raiz.getFilhoDireita() != null) {
+                inserirElemento(elemento, no.getFilhoDireita());
+            } else {
+                no.setFilhoDireita(new No(elemento));
+            }
+        }
 
     }
 
@@ -47,7 +78,42 @@ public class Arvore {
         return null;
     }
 
-    void imprimeArvore() {
+    String organizarTraco(No no) {
+        char[] valor = Integer.toString(no.getValor()).toCharArray();
+        int contagem = 0, proporcao = 6;
+        char[] linha = new char[40];
+        for (int i = 0; i < linha.length; i++) {
+            linha[i] = '-';
+            if (((no.getNivel() - 1) * proporcao) <= i && i < (((no.getNivel() - 1) * proporcao) + valor.length)) {
+                linha[i] = valor[contagem];
+                contagem++;
+            }
+
+            if (i < ((no.getNivel() - 1) * proporcao)) {
+                linha[i] = ' ';
+            }
+        }
+        String arv = "";
+        System.out.println(linha.length);
+        for (int i = 0; i < linha.length; i++) {
+            arv += linha[i];
+        }
+        arv += "\n";
+        return arv;
+
+    }
+
+    public String imprimeArvore(String a, No no) {
+        String arvore = a;
+        System.out.println(no.getValor());
+        arvore = organizarTraco(no);
+        if (no.getFilhoDireita() != null) {
+            arvore += imprimeArvore(arvore, no.getFilhoDireita());
+        }
+        if (no.getFilhoEsquerda() != null) {
+            arvore += imprimeArvore(arvore, no.getFilhoEsquerda());
+        }
+        return arvore;
 
     }
 

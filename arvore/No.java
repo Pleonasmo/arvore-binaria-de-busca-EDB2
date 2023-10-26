@@ -5,7 +5,7 @@ public class No {
     private No filhoDireita, filhoEsquerda;
     private int nivel, alturaNo;
 
-    No(int valor) {
+    public No(int valor) {
         this.valor = valor;
     }
 
