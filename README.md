@@ -32,3 +32,7 @@ descrição da ABB que será utilizada e é denominado arquivo de entrada da ABB
 entrada da ABB contém uma sequência de valores inteiros separados por um espaço, os valores a
 serem armazenados na árvore. O segundo arquivo, denominado arquivo de comandos, contém uma
 sequência de operações (uma operação por linha) a serem realizadas pelo seu algoritmo.
+
+# INSTRUÇÕES PARA EXECUTAR:
+Os arquivos do tipo .txt com as árvores e as operações devem estar na pasta "Arquivos" do
+projeto, que guarda os arquivos de texto que serão lidos pelo programa.
