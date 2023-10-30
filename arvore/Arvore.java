@@ -7,10 +7,12 @@ public class Arvore {
         this.raiz = null;
     }
 
+    // função raiz de busca de elemento
     public No buscarElemento(int valor) {
         return buscarElemento(this.raiz, valor);
     }
 
+    // função recursiva de busca de elemento
     public No buscarElemento(No no, int valor) {
         if (no == null || no.getValor() == valor)
             return no;
@@ -20,10 +22,12 @@ public class Arvore {
         return buscarElemento(no.getFilhoDireita(), valor);
     }
 
+    // função raiz de inserção de elemento
     public void inserirElemento(int valor) {
         this.raiz = inserirElemento(valor, this.raiz);
     }
 
+    // função recursiva de inserção de elemento
     public No inserirElemento(int valor, No no) {
         if (no == null) {
             no = new No(valor);
@@ -36,8 +40,12 @@ public class Arvore {
         return no;
     }
 
-    void removerElemento(int elemento) {
+    public void removerElemento(int valor) {
+        this.raiz = removerElemento(valor, raiz);
+    }
 
+    public No removerElemento(int valor, No no) {
+        return null;
     }
 
     int enesimoElemento(int n) {

@@ -71,6 +71,8 @@ public class Main {
             System.out.println(i + " não está na árvore!");
         else
             System.out.println(i + " está na árvore!");
+
+        ler.close();
     }
 
 }
