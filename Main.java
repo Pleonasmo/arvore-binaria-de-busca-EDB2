@@ -65,6 +65,12 @@ public class Main {
 
         imprimirEmOrdem(a1.getRaiz());
 
+        System.out.println("\n\nDigite o elemento que deseja buscar:");
+        i = ler.nextInt();
+        if (a1.buscarElemento(i) == null)
+            System.out.println(i + " não está na árvore!");
+        else
+            System.out.println(i + " está na árvore!");
     }
 
 }

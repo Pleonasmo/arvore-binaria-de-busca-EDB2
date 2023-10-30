@@ -7,15 +7,17 @@ public class Arvore {
         this.raiz = null;
     }
 
-    public int buscarElemento(No no, int valor) {
-        if (no.getValor() == valor)
-            return 1;
-        else if (no.getFilhoDireita() != null)
-            buscarElemento(no.getFilhoDireita(), valor);
-        else if (no.getFilhoEsquerda() != null)
-            buscarElemento(no.getFilhoEsquerda(), valor);
+    public No buscarElemento(int valor) {
+        return buscarElemento(this.raiz, valor);
+    }
 
-        return 0;
+    public No buscarElemento(No no, int valor) {
+        if (no == null || no.getValor() == valor)
+            return no;
+        if (valor < no.getValor())
+            return buscarElemento(no.getFilhoEsquerda(), valor);
+
+        return buscarElemento(no.getFilhoDireita(), valor);
     }
 
     public void inserirElemento(int valor) {
