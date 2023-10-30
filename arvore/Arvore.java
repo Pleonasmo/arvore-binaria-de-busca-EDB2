@@ -3,52 +3,35 @@ package arvore;
 public class Arvore {
     private No raiz;
 
-    public Arvore(int valor) {
-        this.raiz = new No(valor);
-        raiz.setNivel(1);
+    public Arvore() {
+        this.raiz = null;
     }
 
-    public int buscarElemento(No no, int elemento) {
-        if (no.getValor() == elemento) {
+    public int buscarElemento(No no, int valor) {
+        if (no.getValor() == valor)
             return 1;
-        } else if (no.getFilhoDireita() != null) {
+        else if (no.getFilhoDireita() != null)
+            buscarElemento(no.getFilhoDireita(), valor);
+        else if (no.getFilhoEsquerda() != null)
+            buscarElemento(no.getFilhoEsquerda(), valor);
 
-            buscarElemento(no.getFilhoDireita(), elemento);
-
-        } else if (no.getFilhoEsquerda() != null) {
-
-            buscarElemento(no.getFilhoEsquerda(), elemento);
-
-        }
         return 0;
     }
 
-    public Arvore inserirElemento(int elemento, No no, Arvore arvore) {
-        System.out.println(no.getValor());
-        System.out.println("Elemnteo: " + elemento);
-        if (elemento < no.getValor()) {
-            System.out.println("Entrou no if esq");
-            if (no.getFilhoEsquerda() != null) {
-                System.out.println("Entrou no segund if esq");
-               return inserirElemento(elemento, no.getFilhoEsquerda(), arvore);
-            } else {
-                 System.out.println("Entrou no else");
-                no.setFilhoEsquerda(new No(elemento));
-            }
-        }
-        if (elemento > no.getValor()) {
-            System.out.println("Entrou no if dir");
-            if (no.getFilhoDireita() != null) {
-                System.out.println("Entrou no segund if dir");
-                return inserirElemento(elemento, no.getFilhoDireita(), arvore);
-            } else {
-                System.out.println("Entrou no else");
-                no.setFilhoDireita(new No(elemento));
-            }
-        }
-        System.out.println("Passou dos dois ifs.");
-        return arvore;
+    public void inserirElemento(int valor) {
+        this.raiz = inserirElemento(valor, this.raiz);
+    }
 
+    public No inserirElemento(int valor, No no) {
+        if (no == null) {
+            no = new No(valor);
+            return no;
+        } else if (valor < no.getValor())
+            no.setFilhoEsquerda(inserirElemento(valor, no.getFilhoEsquerda()));
+        else if (valor > no.getValor())
+            no.setFilhoDireita(inserirElemento(valor, no.getFilhoDireita()));
+
+        return no;
     }
 
     void removerElemento(int elemento) {
@@ -99,7 +82,7 @@ public class Arvore {
             }
         }
         String arv = "";
-   
+
         for (int i = 0; i < linha.length; i++) {
             arv += linha[i];
         }
@@ -110,7 +93,7 @@ public class Arvore {
 
     public String imprimeArvore(String a, No no) {
         String arvore = a;
-   
+
         arvore = organizarTraco(no);
         if (no.getFilhoDireita() != null) {
             arvore += imprimeArvore(arvore, no.getFilhoDireita());
