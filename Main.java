@@ -72,6 +72,12 @@ public class Main {
         else
             System.out.println(i + " está na árvore!");
 
+        System.out.println("\nDigite o elemento que deseja remover:");
+        i = ler.nextInt();
+        a1.removerElemento(i);
+        imprimirEmOrdem(a1.getRaiz());
+        System.out.println("\n");
+
         ler.close();
     }
 

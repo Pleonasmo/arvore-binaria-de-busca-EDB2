@@ -40,12 +40,42 @@ public class Arvore {
         return no;
     }
 
+    // função raiz de remoção de elemento:
     public void removerElemento(int valor) {
         this.raiz = removerElemento(valor, raiz);
     }
 
+    // função para encontrar nó com menor valor da subárvore onde o parametro "no" é
+    // raiz:
+    public int menorValor(No no) {
+        int menor = no.getValor();
+        while (no.getFilhoEsquerda() != null) {
+            menor = no.getFilhoEsquerda().getValor();
+            no = no.getFilhoEsquerda();
+        }
+
+        return menor;
+    }
+
+    // função recursiva de remoção de elemento:
     public No removerElemento(int valor, No no) {
-        return null;
+        if (no == null)
+            return no;
+        if (valor < no.getValor())
+            no.setFilhoEsquerda(removerElemento(valor, no.getFilhoEsquerda()));
+        if (valor > no.getValor())
+            no.setFilhoDireita(removerElemento(valor, no.getFilhoDireita()));
+        else {
+            if (no.getFilhoEsquerda() == null)
+                return no.getFilhoDireita();
+            else if (no.getFilhoDireita() == null)
+                return no.getFilhoEsquerda();
+
+            no.setValor(menorValor(no.getFilhoDireita()));
+            no.setFilhoDireita(removerElemento(valor, no.getFilhoDireita()));
+        }
+
+        return no;
     }
 
     int enesimoElemento(int n) {
