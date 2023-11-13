@@ -7,6 +7,7 @@ public class No {
 
     public No(int valor) {
         this.valor = valor;
+        this.nivel = -1;
     }
 
     public int getValor() {

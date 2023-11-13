@@ -6,20 +6,22 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-import arvore.Arvore;
-import arvore.No;
+import arvore.*;
 
 public class Main {
 
-    public static String lerArquivo(String arq) throws IOException {
+    public static ArrayList lerArquivo(String arq) throws IOException {
         BufferedReader leitor = new BufferedReader(new FileReader(arq));
-
+        ArrayList<String> arvores = new ArrayList<String>();
         String linha = "";
-
-        linha = leitor.readLine();
+        while (linha != null) {
+            linha = leitor.readLine();
+            if (linha != null)
+                arvores.add(linha);
+        }
 
         leitor.close();
-        return linha;
+        return arvores;
     }
 
     public static void imprimirEmOrdem(No no) {
@@ -31,27 +33,98 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        // String arqLeituraArvores = "Arquivos/arquivo1.txt";
-        // String arqLeituraFuncoes = "Arquivos/arquivo2.txt";
+        String arqLeituraArvores = "Arquivos/arquivo1.txt";
+        String arqLeituraFuncoes = "Arquivos/arquivo2.txt";
+        ArrayList<Arvore> arvores = new ArrayList<Arvore>();
+        ArrayList<String> linhasArqArv = lerArquivo(arqLeituraArvores);
+        ArrayList<String> linhasArqFuncoes = lerArquivo(arqLeituraFuncoes);
+        System.out.println(linhasArqArv);
+        System.out.println(linhasArqFuncoes);
 
-        // String linhasArq = lerArquivo(arqLeituraArvores);
-        // System.out.println(linhasArq);
-        // Arvore essa;
+        for (String arvore : linhasArqArv) {
+            System.out.println(arvore);
+            String[] nos = arvore.split(" ");
+            Arvore nova = new Arvore(Integer.parseInt(nos[0]));
+            nova.criarArvore(nos);
+            nova.calcularNivel();
+            arvores.add(nova);
 
-        // ArrayList<Arvore> arvores = new ArrayList<>();
-
-        // int contador = 0;
-        // String[] nos = linhasArq.split(" ");
-        // System.out.println(Integer.parseInt(nos[contador]));
-        // essa = new Arvore(Integer.parseInt(nos[contador]));
-        // for (String no : nos) {
-        // System.out.println("Entrou aqui - for");
-        // essa = essa.inserirElemento(Integer.parseInt(nos[contador++]),
-        // essa.getRaiz(), essa);
-        // }
-
-        // String arv = essa.imprimeArvore("", essa.getRaiz());
-        // JOptionPane.showMessageDialog(null, arv);
+        }
+        JOptionPane.showMessageDialog(null, "Bem vindo, você tem " + arvores.size() + " arvores criadas.");
+        for (String funcao : linhasArqFuncoes) {
+            String entradas[] = funcao.split(" ");
+            System.out.println(entradas[0]);
+            if (entradas[0].equals("CHEIA")) {
+                for (Arvore a : arvores) {
+                    boolean verificador = a.ehCheia();
+                    if (verificador == true) {
+                        JOptionPane.showMessageDialog(null,
+                                "A árvore " + a.imprimeArvore("", a.getRaiz()) + " é cheia!");
+                    }
+                }
+            }
+            if (entradas[0].equals("COMPLETA")) {
+                for (Arvore a : arvores) {
+                    boolean verificador = a.ehCompleta();
+                    if (verificador == true) {
+                        JOptionPane.showMessageDialog(null,
+                                "A árvore " + a.imprimeArvore("", a.getRaiz()) + " é completa!");
+                    }
+                }
+            }
+            if (entradas[0].equals("ENESIMO")) {
+                for (Arvore a : arvores) {
+                    int enesimoElemento = a.enesimoElemento(Integer.parseInt(entradas[1]));
+                    JOptionPane.showMessageDialog(null,
+                            "O enesimo elemento da árvore \n" + a.imprimeArvore() + " é: "
+                                    + enesimoElemento);
+                }
+            }
+            if (entradas[0].equals("INSIRA")) {
+                for (Arvore a : arvores) {
+                    a.inserirElemento(Integer.parseInt(entradas[1]));
+                    JOptionPane.showMessageDialog(null,
+                            a.imprimeArvore());
+                }
+            }
+            if (entradas[0].equals("PREORDEM"))
+                for (Arvore a : arvores)
+                    JOptionPane.showMessageDialog(null,
+                            a.imprimeArvore() + "\n" + a.preOrdem());
+            if (entradas[0].equals("IMPRIMA")) {
+                for (int i = 1; i < entradas.length - 1; i++) {
+                    System.out.println(i + " " + (Integer.parseInt(entradas[i]) - 1));
+                    JOptionPane.showMessageDialog(null,
+                            arvores.get(Integer.valueOf(entradas[i]) - 1));
+                }
+            }
+            if (entradas[0].equals("REMOVA")) {
+            }
+            if (entradas[0].equals("POSICAO")) {
+                for (Arvore a : arvores) {
+                    int pElemento = a.posicao(Integer.parseInt(entradas[1]));
+                    if (pElemento != -1)
+                        JOptionPane.showMessageDialog(null,
+                                a.imprimeArvore() + "\nA posição do elemento é de: " + pElemento);
+                    else
+                        JOptionPane.showMessageDialog(null,
+                                a.imprimeArvore() + "O elemento " + entradas[1]
+                                        + " não existe na árvore.");
+                }
+            }
+            if (entradas[0].equals("MEDIANA"))
+                for (Arvore a : arvores)
+                    JOptionPane.showMessageDialog(null,
+                            a.imprimeArvore() + "\n" + "A mediana da árvore é: " + a.mediana());
+            if (entradas[0].equals("MEDIA")) {
+                 for (Arvore a : arvores)
+                    JOptionPane.showMessageDialog(null,
+                            a.imprimeArvore() + "\n" + "A media da árvore é: " + a.media(Integer.parseInt(entradas[1])));
+        
+            }
+            if (entradas[0].equals("BUSCAR")) {
+            }
+        }
 
         Arvore a1 = new Arvore();
         Scanner ler = new Scanner(System.in);
@@ -79,6 +152,7 @@ public class Main {
         System.out.println("\n");
 
         ler.close();
+        a1.imprimeArvore("", null);
     }
 
 }
