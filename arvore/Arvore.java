@@ -85,14 +85,25 @@ public class Arvore {
     }
 
     public int enesimoElemento(int n) {
-        No enesimo_no = raiz;
-        for (int i = 0; i <= n; i++) {
-
-        }
-        return enesimo_no.getValor();
+        return enesimoElemento(n, this.raiz, 1);
     }
 
-   public int posicao(int x) {
+    int enesimoElemento(int n, No no, int contador) {
+        System.out.println(no.getValor() + " - " + contador + " - ");
+        if (no.getFilhoEsquerda() != null) {
+            enesimoElemento(n, no.getFilhoEsquerda(), contador);
+        }
+        if (n == contador) {
+            return no.getValor();
+        }
+        ++contador;
+        if (no.getFilhoDireita() != null) {
+            enesimoElemento(n, no.getFilhoDireita(), contador);
+        }
+        return no.getValor();
+    }
+
+    public int posicao(int x) {
         return posicao(x, this.raiz.getValor(), 1);
     }
 

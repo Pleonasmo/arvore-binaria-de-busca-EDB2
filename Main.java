@@ -75,6 +75,7 @@ public class Main {
             if (entradas[0].equals("ENESIMO")) {
                 for (Arvore a : arvores) {
                     int enesimoElemento = a.enesimoElemento(Integer.parseInt(entradas[1]));
+                    System.out.println(enesimoElemento);
                     JOptionPane.showMessageDialog(null,
                             "O enesimo elemento da árvore \n" + a.imprimeArvore() + " é: "
                                     + enesimoElemento);
