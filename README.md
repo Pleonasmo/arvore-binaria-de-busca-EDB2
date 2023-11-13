@@ -39,8 +39,8 @@ projeto, que guarda os arquivos de texto que serão lidos pelo programa.
 
 O arquivo com as árvores deve esta nomeado como "arquivo1.txt".
 O arquivo com as funções deve esta nomeado como "arquivo2.txt".
-
-Atenção: O programa aceita mais de uma árvore, porém, ela devem estar separadas.
+# Atenção: 
+O programa aceita mais de uma árvore, porém, ela devem estar separadas.
 Exemplo: 
         30 40 50 60 83 73
         87 98 09 92 03 94

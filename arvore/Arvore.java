@@ -91,7 +91,20 @@ public class Arvore {
         return enesimo_no.getValor();
     }
 
-    public int posicao(int x) {
+    int posicao(int x) {
+        return posicao(x, this.raiz.getValor(), 1);
+    }
+
+    // Ainda p testar
+    public int posicao(int x, int valorAtual, int pAtual) {
+        No no = buscarElemento(valorAtual);
+        valorAtual = no.getValor();
+        if (x == pAtual)
+            return no.getValor();
+        if (no.getFilhoEsquerda() != null)
+            return posicao(x, no.getFilhoEsquerda().getValor(), ++pAtual);
+        if (no.getFilhoDireita() != null)
+            return posicao(x, no.getFilhoDireita().getValor(), ++pAtual);
         return -1;
     }
 
