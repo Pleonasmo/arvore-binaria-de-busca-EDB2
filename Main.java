@@ -117,13 +117,23 @@ public class Main {
                     JOptionPane.showMessageDialog(null,
                             a.imprimeArvore() + "\n" + "A mediana da árvore é: " + a.mediana());
             if (entradas[0].equals("MEDIA")) {
-                 for (Arvore a : arvores)
+                for (Arvore a : arvores)
                     JOptionPane.showMessageDialog(null,
-                            a.imprimeArvore() + "\n" + "A media da árvore é: " + a.media(Integer.parseInt(entradas[1])));
-        
+                            a.imprimeArvore() + "\n" + "A media da árvore é: "
+                                    + a.media(Integer.parseInt(entradas[1])));
+
             }
-            if (entradas[0].equals("BUSCAR")) {
-            }
+            if (entradas[0].equals("BUSCAR"))
+                for (Arvore a : arvores) {
+                    No no = a.buscarElemento(Integer.parseInt(entradas[1]));
+                    System.out.println(no.getValor());
+                    if (no == null)
+                        JOptionPane.showMessageDialog(null,
+                                a.imprimeArvore() + "\n" + "O elemento " + entradas[1] + " não existe na árvore.");
+                    else
+                        JOptionPane.showMessageDialog(null,
+                                a.imprimeArvore() + "\n" + "O elemento " + entradas[1] + " foi encontrado.");
+                }
         }
 
         Arvore a1 = new Arvore();

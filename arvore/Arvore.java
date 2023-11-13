@@ -48,6 +48,7 @@ public class Arvore {
     // função raiz de remoção de elemento:
     public void removerElemento(int valor) {
         this.raiz = removerElemento(valor, raiz);
+        calcularNivel();
     }
 
     // função para encontrar nó com menor valor da subárvore onde o parametro "no" é
@@ -91,12 +92,12 @@ public class Arvore {
         return enesimo_no.getValor();
     }
 
-    int posicao(int x) {
+   public int posicao(int x) {
         return posicao(x, this.raiz.getValor(), 1);
     }
 
     // Ainda p testar
-    public int posicao(int x, int valorAtual, int pAtual) {
+    int posicao(int x, int valorAtual, int pAtual) {
         No no = buscarElemento(valorAtual);
         valorAtual = no.getValor();
         if (x == pAtual)
