@@ -47,3 +47,8 @@ Exemplo:
 
 Árvore 1: 30 40 50 60 83 73
 Árvore 2: 87 98 09 92 03 94
+
+# Antes da execução é necessário verificar se possui o JRE na maquina
+
+
+$ java -jar nomedoarquivo.jar
