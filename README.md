@@ -40,15 +40,17 @@ projeto, que guarda os arquivos de texto que serão lidos pelo programa.
 O arquivo com as árvores deve esta nomeado como "arquivo1.txt".
 O arquivo com as funções deve esta nomeado como "arquivo2.txt".
 # Atenção: 
-O programa aceita mais de uma árvore, porém, ela devem estar separadas.
+O programa aceita mais de uma árvore, porém, ela devem estar separadas por uma quebra de linha.
 Exemplo: 
+        
         30 40 50 60 83 73
+        
         87 98 09 92 03 94
 
 Árvore 1: 30 40 50 60 83 73
 Árvore 2: 87 98 09 92 03 94
 
-# Antes da execução é necessário verificar se possui o JRE na maquina
-
-
-$ java -jar nomedoarquivo.jar
+# Para compilar 
+Verifique se o JRE está instalado na maquina.
+execute o seguinte comando: javac Main.java
+e logo em seguida execute:  java Main
