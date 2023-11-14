@@ -3,7 +3,7 @@ package arvore;
 public class No {
     private int valor;
     private No filhoDireita, filhoEsquerda;
-    private int nivel, alturaNo;
+    private int nivel, qtdFilhosEsquerda, qtdFihosDireita;
 
     public No(int valor) {
         this.valor = valor;
@@ -42,12 +42,22 @@ public class No {
         this.nivel = nivel;
     }
 
-    public int getAlturaNo() {
-        return this.alturaNo;
+
+    public int getQtdFilhosEsquerda() {
+        return this.qtdFilhosEsquerda;
     }
 
-    public void setAlturaNo(int alturaNo) {
-        this.alturaNo = alturaNo;
+    public void setQtdFilhosEsquerda(int qtdFilhosEsquerda) {
+        this.qtdFilhosEsquerda = qtdFilhosEsquerda;
     }
+
+    public int getQtdFihosDireita() {
+        return this.qtdFihosDireita;
+    }
+
+    public void setQtdFihosDireita(int qtdFihosDireita) {
+        this.qtdFihosDireita = qtdFihosDireita;
+    }
+   
 
 }

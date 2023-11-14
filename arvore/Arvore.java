@@ -1,5 +1,7 @@
 package arvore;
 
+import javax.swing.tree.TreeNode;
+
 public class Arvore {
     private No raiz;
 
@@ -27,28 +29,52 @@ public class Arvore {
     }
 
     // função raiz de inserção de elemento
-    public void inserirElemento(int valor) {
-        this.raiz = inserirElemento(valor, this.raiz);
-        calcularNivel();
+    public boolean inserirElemento(int valor) {
+        return inserirElemento(this.raiz, valor);
+
     }
 
     // função recursiva de inserção de elemento
-    public No inserirElemento(int valor, No no) {
+    boolean inserirElemento(No no, int valor) {
+        Boolean t = false;
         if (no == null) {
-            no = new No(valor);
-            return no;
-        } else if (valor < no.getValor())
-            no.setFilhoEsquerda(inserirElemento(valor, no.getFilhoEsquerda()));
-        else if (valor > no.getValor())
-            no.setFilhoDireita(inserirElemento(valor, no.getFilhoDireita()));
+            t = true; // Inserção bem-sucedida
+        } else {
+            // Realizamos a inserção recursiva
+            if (valor < no.getValor()) {
+                // Inserir na subárvore esquerda
+                t = inserirElemento(no.getFilhoEsquerda(), valor);
+                if (t) {
+                    if (no.getFilhoEsquerda() == null) {
+                        no.setFilhoEsquerda(new No(valor));
+                        return true; // Inserção bem-sucedida
+                    }
+                }
+            } else if (valor > no.getValor()) {
+                // Inserir na subárvore direita
+                t = inserirElemento(no.getFilhoDireita(), valor);
+                if (t) {
+                    if (no.getFilhoDireita() == null) {
+                        no.setFilhoDireita(new No(valor));
+                        return true; // Inserção bem-sucedida
+                    }
+                }
+            }
+        }
+        atualizar();
+        return t; // Valor já existe na árvore
+    }
 
-        return no;
+    public void atualizar() {
+        calcularNivel();
+        calcularQuantNos(this.raiz);
+        calcularQtdFilhos(this.raiz);
     }
 
     // função raiz de remoção de elemento:
     public void removerElemento(int valor) {
         this.raiz = removerElemento(valor, raiz);
-        calcularNivel();
+        atualizar();
     }
 
     // função para encontrar nó com menor valor da subárvore onde o parametro "no" é
@@ -85,70 +111,94 @@ public class Arvore {
     }
 
     public int enesimoElemento(int n) {
-        return enesimoElemento(n, this.raiz, 1);
+        return enesimoElemento(this.raiz, n);
     }
 
-    int enesimoElemento(int n, No no, int contador) {
-        System.out.println(no.getValor() + " - " + contador + " - ");
-        if (no.getFilhoEsquerda() != null) {
-            enesimoElemento(n, no.getFilhoEsquerda(), contador);
+    public int enesimoElemento(No no, int n) {
+        if (no == null)
+            return -1;
+        if (no.getQtdFilhosEsquerda() >= n) {
+            return enesimoElemento(no.getFilhoEsquerda(), n);
+        } else {
+            if (n == 1)
+                return no.getValor();
+            if (no.getQtdFilhosEsquerda() == n - 1)
+                return no.getValor();
+            return enesimoElemento(no.getFilhoDireita(), n - no.getQtdFilhosEsquerda() - 1);
         }
-        if (n == contador) {
-            return no.getValor();
+    }
+
+    public double mediana() {
+        if (this.raiz.getQtdFihosDireita() + this.raiz.getQtdFilhosEsquerda() % 2 == 0) {
+
         }
-        ++contador;
-        if (no.getFilhoDireita() != null) {
-            enesimoElemento(n, no.getFilhoDireita(), contador);
-        }
-        return no.getValor();
-    }
-
-    public int posicao(int x) {
-        return posicao(x, this.raiz.getValor(), 1);
-    }
-
-    // Ainda p testar
-    int posicao(int x, int valorAtual, int pAtual) {
-        No no = buscarElemento(valorAtual);
-        valorAtual = no.getValor();
-        if (x == pAtual)
-            return no.getValor();
-        if (no.getFilhoEsquerda() != null)
-            return posicao(x, no.getFilhoEsquerda().getValor(), ++pAtual);
-        if (no.getFilhoDireita() != null)
-            return posicao(x, no.getFilhoDireita().getValor(), ++pAtual);
-        return -1;
-    }
-
-    public int mediana() {
         return 0;
     }
 
+    public int posicao(int x) {
+        return posicao(x, this.raiz);
+    }
+
+    // Ainda p testar
+    public int posicao(int x, No no) {
+        if (no == null)
+            return -1;
+        if (x == no.getValor())
+            return 1;
+
+        int pos = posicao(x, no.getFilhoEsquerda());
+        if (pos != -1)
+            return pos;
+        else
+            return posicao(x, no.getFilhoDireita()) + 1 + calcularQuantNos(raiz.getFilhoEsquerda());
+    }
+
+    double soma(No no) {
+        if (no == null)
+            return 0;
+        double valor = (no.getValor() + soma(no.getFilhoEsquerda()) + soma(no.getFilhoDireita()));
+        return valor;
+    }
+
     public double media(int x) {
-        return media(x, 0, 0);
-    }
-
-    double media(int x, int valorTotal, int quantNos) {
         No no = buscarElemento(x);
-        if (no.getFilhoDireita() != null) {
-            valorTotal += media(no.getFilhoDireita().getValor(), valorTotal += no.getFilhoDireita().getValor(),
-                    ++quantNos);
-        }
-        if (no.getFilhoEsquerda() != null) {
-            valorTotal += media(no.getFilhoEsquerda().getValor(), valorTotal += no.getFilhoEsquerda().getValor(),
-                    ++quantNos);
-        }
+        if(no != null)
+     {   int quantNos = (no.getQtdFilhosEsquerda() + no.getQtdFihosDireita() + 1);
+        if (quantNos != 0)
+            return soma(no) / quantNos;
 
-        return valorTotal / quantNos;
+        return 0;
+    }else{
+        return -1;
+    }
     }
 
-    public Boolean ehCheia() {
+    public boolean ehCheia() {
+        return ehCheia(this.raiz);
+    }
+
+    public boolean ehCheia(No no) {
+        if (no == null)
+            return true;
+        if ((no.getFilhoEsquerda() != null && no.getFilhoDireita() != null) ||
+                (no.getFilhoEsquerda() == null && no.getFilhoDireita() == null))
+            return ehCheia(no.getFilhoEsquerda()) && ehCheia(no.getFilhoDireita());
         return false;
     }
 
-    public Boolean ehCompleta() {
+    public boolean ehCompleta() {
+        int quantNos = calcularQuantNos(this.raiz);
+        return ehCompleta(this.raiz, quantNos, 0);
+    }
 
-        return false;
+    public boolean ehCompleta(No no, int quantNos, int indice) {
+        if (no == null)
+            return true;
+        if (no != null && indice > quantNos)
+            return false;
+
+        return ehCompleta(no.getFilhoEsquerda(), quantNos, 1 + indice * 2)
+                && ehCompleta(no.getFilhoDireita(), quantNos, 2 + indice * 2);
     }
 
     public String preOrdem() {
@@ -156,41 +206,30 @@ public class Arvore {
     }
 
     public String preOrdem(String a, No no) {
-
-        String arvore = a;
-        arvore += no.getValor() + " ";
-
-        if (no.getFilhoEsquerda() != null) {
-            arvore += preOrdem(arvore, no.getFilhoEsquerda());
-        }
-        if (no.getFilhoDireita() != null) {
-            arvore += preOrdem(arvore, no.getFilhoDireita());
-        }
-        System.out.println(arvore);
+        String arvore = a + " " + no.getValor();
+        if (no.getFilhoEsquerda() != null)
+            arvore = preOrdem(arvore, no.getFilhoEsquerda());
+        if (no.getFilhoDireita() != null)
+            arvore = preOrdem(arvore, no.getFilhoDireita());
         return arvore;
-
     }
 
     String organizarTraco(No no) {
-        char[] valor = Integer.toString(no.getValor()).toCharArray();
+        char[] valor = Integer.toString(no.getValor()).toCharArray(), linha = new char[40];
         int contagem = 0, proporcao = 6;
-        char[] linha = new char[40];
         for (int i = 0; i < linha.length; i++) {
             linha[i] = '-';
             if (((no.getNivel() - 1) * proporcao) <= i && i < (((no.getNivel() - 1) * proporcao) + valor.length)) {
                 linha[i] = valor[contagem];
                 contagem++;
             }
-
             if (i < ((no.getNivel() - 1) * proporcao))
                 linha[i] = ' ';
 
         }
         String arv = "";
-
         for (int i = 0; i < linha.length; i++)
             arv += linha[i];
-
         arv += "\n";
         return arv;
 
@@ -203,30 +242,16 @@ public class Arvore {
     public String imprimeArvore(String a, No no) {
         String arvore = organizarTraco(no);
 
-        if (no.getFilhoDireita() != null) {
+        if (no.getFilhoDireita() != null)
             arvore += imprimeArvore(arvore, no.getFilhoDireita());
-
-        }
-        if (no.getFilhoEsquerda() != null) {
+        if (no.getFilhoEsquerda() != null)
             arvore += imprimeArvore(arvore, no.getFilhoEsquerda());
-        }
-
         return arvore;
-
-    }
-
-    public No getRaiz() {
-        return this.raiz;
-    }
-
-    public void setRaiz(No raiz) {
-        this.raiz = raiz;
     }
 
     public void criarArvore(String[] nos) {
         for (int i = 1; i < nos.length; i++)
-            inserirElemento(Integer.parseInt(nos[i]), this.raiz);
-
+            inserirElemento(Integer.parseInt(nos[i]));
     }
 
     public void calcularNivel() {
@@ -234,11 +259,30 @@ public class Arvore {
     }
 
     public void calcularNivel(No no, int nivel) {
-
         no.setNivel(nivel);
         if (no.getFilhoEsquerda() != null)
             calcularNivel(no.getFilhoEsquerda(), nivel + 1);
         if (no.getFilhoDireita() != null)
             calcularNivel(no.getFilhoDireita(), nivel + 1);
     }
+
+    public void calcularQtdFilhos(No no) {
+        if (no == null)
+            return;
+        calcularQtdFilhos(no.getFilhoEsquerda());
+        no.setQtdFilhosEsquerda(no.getFilhoEsquerda() != null
+                ? (no.getFilhoEsquerda().getQtdFihosDireita() + no.getFilhoEsquerda().getQtdFilhosEsquerda() + 1)
+                : 0);
+        calcularQtdFilhos(no.getFilhoDireita());
+        no.setQtdFihosDireita(no.getFilhoDireita() != null
+                ? (no.getFilhoDireita().getQtdFihosDireita() + no.getFilhoDireita().getQtdFilhosEsquerda() + 1)
+                : 0);
+    }
+
+    public int calcularQuantNos(No no) {
+        if (no == null)
+            return 0;
+        return 1 + calcularQuantNos(no.getFilhoEsquerda()) + calcularQuantNos(no.getFilhoDireita());
+    }
+
 }
