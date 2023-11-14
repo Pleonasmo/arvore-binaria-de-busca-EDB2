@@ -38,31 +38,28 @@ public class Arvore {
     boolean inserirElemento(No no, int valor) {
         Boolean t = false;
         if (no == null) {
-            t = true; // Inserção bem-sucedida
+            t = true; 
         } else {
-            // Realizamos a inserção recursiva
             if (valor < no.getValor()) {
-                // Inserir na subárvore esquerda
                 t = inserirElemento(no.getFilhoEsquerda(), valor);
                 if (t) {
                     if (no.getFilhoEsquerda() == null) {
                         no.setFilhoEsquerda(new No(valor));
-                        return true; // Inserção bem-sucedida
+                        return true; 
                     }
                 }
             } else if (valor > no.getValor()) {
-                // Inserir na subárvore direita
                 t = inserirElemento(no.getFilhoDireita(), valor);
                 if (t) {
                     if (no.getFilhoDireita() == null) {
                         no.setFilhoDireita(new No(valor));
-                        return true; // Inserção bem-sucedida
+                        return true; 
                     }
                 }
             }
         }
         atualizar();
-        return t; // Valor já existe na árvore
+        return t; 
     }
 
     public void atualizar() {
@@ -139,7 +136,7 @@ public class Arvore {
         return posicao(x, this.raiz);
     }
 
-    // Ainda p testar
+    
     public int posicao(int x, No no) {
         if (no == null)
             return -1;
